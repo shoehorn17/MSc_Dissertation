@@ -1,9 +1,10 @@
-Plots_for_report/
-Tables_for_report/
-x.\ archive/
+Plots_for_report
+Tables_for_report
+x.\ archive
 Data/x\ DONT\ USE
 
 cleaned_*.dta
 
 *.do.stswp
 *.log
+*.txt
