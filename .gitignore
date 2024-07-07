@@ -3,5 +3,7 @@ Tables_for_report/
 x.\ archive/
 Data/x\ DONT\ USE
 
+cleaned_*.dta
+
 *.do.stswp
 *.log
