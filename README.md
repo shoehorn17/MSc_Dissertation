@@ -9,6 +9,6 @@ A copy of the original dataset is included in the 'Data' folder. The original is
 ## Usage instructions
 
 - dissertation_datacleaning_do: Run this first to clean original data and make suitable for current study analysis. Change Line 13 to match where these files are stored on the user’s local directory.
-- dissertation_analysis_do: Run this second to create sample statistics, plots, and conduct main causal analysis. Change Line 13 to match where these files are stored on the user’s local directory.
+- dissertation_analysis_do: Run this second to create sample statistics, conduct balance checks, generate plots, and conduct main causal analysis. Change Line 13 to match where these files are stored on the user’s local directory.
 - dissertation_robustness_do: Run this third to conducts robustness analyses. Change Line 13 to match where these files are stored on the user’s local directory.
 - dissertation_mediation_do: Run this last to conduct mediation analyses. Change Line 13 to match where these files are stored on the user’s local directory.
