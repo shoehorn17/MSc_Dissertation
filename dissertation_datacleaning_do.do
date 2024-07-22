@@ -1,7 +1,7 @@
 *******************************************************************************
 *NAME: dissertation_datacleaning_do.do
 *DESCRIPTION: data cleaning code for dissertation
-*LAST UPDATED: 25 June 2024
+*LAST UPDATED: 10 July 2024
 *******************************************************************************
 
 *******************************************************************************
@@ -10,7 +10,7 @@
 
 capture log close
 clear
-cd "~\OneDrive\Desktop\LSE MSc Behavioural Sciences\DISSERTATION\6 Methods\1 Main Analysis\Code"
+cd "~\OneDrive\Desktop\LSE MSc Behavioural Sciences\DISSERTATION\6 Methods\1 Main Analysis\Code" 
 capture log using ./dissertation_datacleaning.log, replace
 use "Data\copy_j_egc_withshocks.dta", clear
 
@@ -121,11 +121,7 @@ rename worksnonself farm_selfemployed
 label variable farm_selfemployed "0=Does not work on farm/not self employed | 1=Works on farm/self employed"
 notes farm_selfemployed: "Proxy for EMPLOYMENT STATUS"
 
-/* Drop Unused emmployment variable
-label variable isco_work "ISCO code for work other than self employment (continuous)"
-notes isco_work: "Proxy for EMPLOYMENT STATUS mediator"
-notes isco_work: "International Standard Classification of Occupations (ISCO) is an International Labour Organization (ILO) classification structure for organizing information on labour and jobs. ILO: 'A tool for organizing jobs into a clearly defined set of groups according to the tasks and duties undertaken in the job. It is intended for use in statistical applications...' The ISCO-08 revision is expected to be the standard for labour information worldwide in the coming decade, for instance as applied to incoming data from the 2010 Global Round of National Population Census" */
-drop isco_work
+drop isco_work /* Drops unused emmployment variable */
 
 label variable savings "Savings (continuous)"
 note savings: "Variable for SAVINGS mediator"
@@ -215,20 +211,12 @@ label variable ROB_control_all "CONTROL birth regions: Eastern, Brong Ahafo, Gre
 *Drop regional identifiers unused in analysis
 drop temp1 temp7 temp9 temp10
 
-
 /* DV: K10 OUTCOMES */
 
 *Potential outcome variables: 
 sum lnk10
 tab k10severe
 tab k10
-
-/*TBD additional k10 var
-gen k10severe_cont = .
-replace k10severe_cont = k10 if k10 >= 30 & k10 <= 50
-tab k10severe_cont
-label variable k10severe_cont "K10: Severe Distress scores >= 30 (continuous)"
-*/
 
 /* Potential Covariates and Mediators */
 ***********************************************************
@@ -277,21 +265,6 @@ rename farm_selfemployed employment
 /* ETHNITICTY */
 drop ethdbroadet_2 ethdbroadet_3 ethdbroadet_4 ethdbroadet_5 ethdbroadet_6 ethdbroadet_7 ethdbroadet_8 ethdbroadet_9 ethdbroadet_10 ethdbroadet_11 ethdbroadet_12 ethdbroadet_13 ethdbroadet_14
 
-/* Delete if not using
-
-tab yearofbirth, gen(temp)
-
-rename temp37 YOB_1979
-rename temp38 YOB_1980
-rename temp39 YOB_1981
-rename temp40 YOB_1982
-rename temp41 YOB_1983
-rename temp42 YOB_1984
-rename temp43 YOB_1985
-rename temp44 YOB_1986
-rename temp45 YOB_1987
-
-*/
 
 ***********************************************
 /* Save Data */
