@@ -27,22 +27,15 @@ set scheme stmono1, permanently
 // Visualise relationship between K10 scores and year of birth within treatment regions and within control regions, using conditional means.
 
 *Plot with standard bin width for treatment groups.
-cmogram k10 yearofbirth if ROB_treat_all, graphopts(ytitle("Average K10 Score") xtitle("Year of Birth") xline(0) title("Adult K10 Scores in Most Severely Impacted Regions")  xline(1983) xline(1984)) 
-
-*Export graph for report. 
-graph export "~\OneDrive\Documents\MSc\Stata\Code\Plots_for_report\1a_MeanK10_YOB_Treatment_standard.png", replace 
+cmogram k10 yearofbirth if ROB_treat_all, graphopts(ytitle("Average K10 Score") xtitle("Year of Birth") xline(0) title("Adult K10 Scores in Most Severely Impacted Regions")  xline(1983) xline(1984))
 
 *Plot with standard bin width for control groups.
 cmogram k10 yearofbirth if ROB_control_all, graphopts(ytitle(Average K10 Score) xtitle(Year of Birth) yscale(range(15 22)) title(Adult K10 Scores Per Birth Year in Least Severely Impacted Regions) xline(1983) xline(1984)) 
 
-*Export graph for report. 
-graph export "~\OneDrive\Documents\MSc\Stata\Code\Plots_for_report\1a_MeanK10_YOB_Control_standard.png", replace 
-
 *Plot with 2-year bin width 
 cmogram k10 yearofbirth if ROB_treat_all, histopts(width(2)) graphopts(ytitle("Average K10 Score") xtitle("Year of Birth") xline(0) title("Adult K10 Scores in Most Severely Impacted Regions")  xline(1983) xline(1984)) 
-*1980-81 and *1984-85 may have spikes, so will investigate those age groups (consistent with literature)
 
-cmogram k10 yearofbirth if ROB_control_all, histopts(width(2)) graphopts(ytitle(Average K10 Score) xtitle(Year of Birth) title(Adult K10 Scores in Least Severely Impacted Regions) xline(1983) xline(1984))
+cmogram k10 yearofbirth if ROB_control_all, histopts(width(2)) graphopts(ytitle("Average K10 Score") xtitle("Year of Birth") title("Adult K10 Scores in Least Severely Impacted Regions") xline(1983) xline(1984))
 
 // Visualise K10 score distribution
 *Plot raw k10 scores to test assumption of normality
