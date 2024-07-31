@@ -10,7 +10,7 @@
 
 capture log close
 clear
-cd "~\OneDrive\Desktop\LSE MSc Behavioural Sciences\DISSERTATION\6 Methods\1 Main Analysis\Code"
+cd "~\OneDrive\Documents\MSc\Stata\Code"
 capture log using ./dissertation_mediation.log, replace
 use "Data\cleaned_analysed_dissertationdata.dta", clear
 
@@ -35,6 +35,7 @@ regress lnk10 toddler_treat female SESfatheragric maritalstatus religious, robus
 *Compute the mediated effect ACME. 
 *Include sims(1000) to specify the number of simulations to run for the quasi-Bayesian approximation of parameter uncertainty. 
 *medeff (regress Z X) (regress Y Z X), treat(X) mediate(Z) sims(1000)
+* NOTE: medeff requires "ssc install mediation"
 medeff(regress heightcm_trimmed_std toddler_treat) (regress lnk10 heightcm_trimmed_std toddler_treat female SESfatheragric maritalstatus religious), treat(toddler_treat) mediate(heightcm_trimmed_std) sims(1000)
 
 /* (2) Cognitive Function */

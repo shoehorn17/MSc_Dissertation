@@ -1,7 +1,7 @@
 *******************************************************************************
 *NAME: dissertation_Analysis_do.do
 *DESCRIPTION: Analysis of causal effect of childhood famine exposure on later-life mental health
-*LAST UPDATED: 8 July 2024
+*LAST UPDATED: 31 July 2024
 *******************************************************************************
 
 *******************************************************************************
@@ -10,12 +10,15 @@
 
 capture log close
 clear
-cd "~\OneDrive\Desktop\LSE MSc Behavioural Sciences\DISSERTATION\6 Methods\1 Main Analysis\Code"
+cd "~\OneDrive\Documents\MSc\Stata\Code"
 capture log using ./dissertation_analysis.log, replace
 use "Data\cleaned_dissertationdata.dta", clear
 
 *Set Times New Roman font. 
 graph set window fontface "Times New Roman"
+
+*Set colour scheme. 
+set scheme stmono1, permanently 
 
 *******************************************************************************
 /* Data Observation */
@@ -23,21 +26,17 @@ graph set window fontface "Times New Roman"
 
 // Visualise relationship between K10 scores and year of birth within treatment regions and within control regions, using conditional means.
 
-*Plot with standard bin width 
+*Plot with standard bin width for treatment groups.
 cmogram k10 yearofbirth if ROB_treat_all, graphopts(ytitle("Average K10 Score") xtitle("Year of Birth") xline(0) title("Adult K10 Scores in Most Severely Impacted Regions")  xline(1983) xline(1984)) 
-*Aong those born within the neighboring 10 years of the famine dates (1978 - 1989, there appears to be a spike in K10 scores for those born aroundf 1980 and potentially 1985. 
-******TO DO: add colors to bars of interest (in paint), make those before 1960 pale or remove, make x/y axes the same as other graphs. Get rid of crazy high spike.
 
-graph export "~\OneDrive\Desktop\LSE MSc Behavioural Sciences\DISSERTATION\6 Methods\1 Main Analysis\Code\Plots_for_report\1a_MeanK10_YOB_Treatment_standard.png", replace 
+*Export graph for report. 
+graph export "~\OneDrive\Documents\MSc\Stata\Code\Plots_for_report\1a_MeanK10_YOB_Treatment_standard.png", replace 
 
+*Plot with standard bin width for control groups.
 cmogram k10 yearofbirth if ROB_control_all, graphopts(ytitle(Average K10 Score) xtitle(Year of Birth) yscale(range(15 22)) title(Adult K10 Scores Per Birth Year in Least Severely Impacted Regions) xline(1983) xline(1984)) 
-*In control regions, there appears to be less of a spike here.
-*So it is worth investigating.
-******TO DO: add colors to bars of interest (in paint), make those before 1960 pale or remove, make x/y axes the same as other graphs. Get rid of crazy high spike. 
 
-graph export "~\OneDrive\Desktop\LSE MSc Behavioural Sciences\DISSERTATION\6 Methods\1 Main Analysis\Code\Plots_for_report\1a_MeanK10_YOB_Control_standard.png", replace 
-
-/* Decide if I want to include the 2-year bins and/or comment on them */
+*Export graph for report. 
+graph export "~\OneDrive\Documents\MSc\Stata\Code\Plots_for_report\1a_MeanK10_YOB_Control_standard.png", replace 
 
 *Plot with 2-year bin width 
 cmogram k10 yearofbirth if ROB_treat_all, histopts(width(2)) graphopts(ytitle("Average K10 Score") xtitle("Year of Birth") xline(0) title("Adult K10 Scores in Most Severely Impacted Regions")  xline(1983) xline(1984)) 
@@ -48,14 +47,14 @@ cmogram k10 yearofbirth if ROB_control_all, histopts(width(2)) graphopts(ytitle(
 // Visualise K10 score distribution
 *Plot raw k10 scores to test assumption of normality
 hist k10, normal title("Distribution of Raw K10 Scores") xtitle("K10 Scores") ytitle("Density") 
-graph export "~\OneDrive\Desktop\LSE MSc Behavioural Sciences\DISSERTATION\6 Methods\1 Main Analysis\Code\Plots_for_report\2a_k10_distribution.png", replace 
+graph export "~\OneDrive\Documents\MSc\Stata\Code\Plots_for_report\2a_k10_distribution.png", replace 
 
 *Test assumption of a normal distribution of k10 scores using Shapiro-Wilk test, where H0: The data are normally distributed.
 swilk k10 
 
 *Plot log k10 scores to normalise distribution for ease of interpretation 
 hist lnk10, normal  title("Distribution of Log of K10 Scores") xtitle("K10 Scores") ytitle("Density")
-graph export "~\OneDrive\Desktop\LSE MSc Behavioural Sciences\DISSERTATION\6 Methods\1 Main Analysis\Code\Plots_for_report\2b_logk10_distribution.png", replace  
+graph export "~\OneDrive\Documents\MSc\Stata\Code\Plots_for_report\2b_logk10_distribution.png", replace  
 
 *Test assumption of a normal distribution of log-transformed k10 scores using Shapiro-Wilk test, where H0: The data are normally distributed.
 swilk lnk10 
@@ -216,6 +215,33 @@ summarize lnk10 if infant_control == 1
 summarize k10 if inutero_control == 1
 summarize lnk10 if inutero_control == 1
 
+// Distress Category: Well-to-Mild (K10 10-24)
+tab k10_1 if studysample == 1
+tab k10_1 if toddler_treat == 1
+tab k10_1 if infant_treat == 1
+tab k10_1 if inutero_treat == 1
+tab k10_1 if toddler_control == 1
+tab k10_1 if infant_control == 1
+tab k10_1 if inutero_control == 1
+
+// Distress Category: Moderate (K10 25-29)
+tab k10_2 if studysample == 1
+tab k10_2 if toddler_treat == 1
+tab k10_2 if infant_treat == 1
+tab k10_2 if inutero_treat == 1
+tab k10_2 if toddler_control == 1
+tab k10_2 if infant_control == 1
+tab k10_2 if inutero_control == 1
+
+// Distress Category: Severe (K10 30-50)
+tab k10_3 if studysample == 1
+tab k10_3 if toddler_treat == 1
+tab k10_3 if infant_treat == 1
+tab k10_3 if inutero_treat == 1
+tab k10_3 if toddler_control == 1
+tab k10_3 if infant_control == 1
+tab k10_3 if inutero_control == 1
+
 // Control: Female
 tab female if studysample == 1
 tab female if toddler_treat == 1
@@ -365,13 +391,11 @@ vif
 /* Guidance */
 ******************************************
 *RQ1: Does early-life exposure to famine affect later-life mental health?  
-*Model: MHic =  a + β1Exposureic + γx′ic + εic  
+*Model: MentalHealthic =  α + β1Exposureic + γx′ic + εic  
 
 
 /* Analysis */
 ******************************************
-
-
 
 // COHORT 1: TODDLER
 ********************
@@ -392,7 +416,6 @@ regress lnk10 toddler_control, robust
 
 *Run OLS regression with controls added.
 regress lnk10 toddler_control female SESfatheragric maritalstatus religious, robust 
-
 
 // COHORT 2: INFANT
 ********************
@@ -433,11 +456,9 @@ regress lnk10 inutero_control, robust
 regress lnk10 inutero_control female SESfatheragric maritalstatus religious, robust 
 
 
-/* Results Figures */
-*******************************
-
-// Graph to show results for the 3-4 year old cohort 
-
+***********************************************
+/* Save Data */
+***********************************************
 
 save "Data\cleaned_analysed_dissertationdata.dta", replace
 

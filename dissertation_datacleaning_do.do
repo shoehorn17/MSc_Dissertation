@@ -10,7 +10,7 @@
 
 capture log close
 clear
-cd "~\OneDrive\Desktop\LSE MSc Behavioural Sciences\DISSERTATION\6 Methods\1 Main Analysis\Code" 
+cd "~\OneDrive\Documents\MSc\Stata\Code"
 capture log using ./dissertation_datacleaning.log, replace
 use "Data\copy_j_egc_withshocks.dta", clear
 
