@@ -1,6 +1,6 @@
 # MSc Dissertation
 
-This repository includes four Stata Do files and the original dataset that accompany the MSc Behavioural Science dissertation titled, "The Indelible Mark of Starvation: Long-Term Mental Health Consequences of Childhood Exposure to Famine in Ghana".
+This repository includes four Stata Do files and the original dataset that accompany the MSc Behavioural Science dissertation titled, "The Indelible Mark of Starvation: Long-Term Mental Health Consequences of Early-Life Famine Exposure Among Survivors in Ghana".
 
 ## Data
 
